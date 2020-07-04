@@ -15,6 +15,14 @@ class EventListener implements Listener
 {
     private $data;
 
+    private $directions =
+        [
+            "NORTH",
+            "SOUTH",
+            "WEST",
+            "EAST"
+        ];
+
     public function InteractEvent(PlayerInteractEvent $event)
     {
         if ($event->getAction() >= 2) return;
@@ -38,8 +46,9 @@ class EventListener implements Listener
             case BlockIds::CHEST:
             case BlockIds::ENDER_CHEST:
             case BlockIds::WALL_SIGN:
-                $block->setDamage(($meta+1 <= 4)?$meta+1:0);
-                $player->sendActionBarMessage("向きを変更しました");
+                $block->setDamage(($meta+1 <= 5)? $meta+1:2);
+                $d = $block->getDamage();
+                $player->sendActionBarMessage("向きを".$this->directions[$d-2]."に変更しました");
                 break;
             case BlockIds::SIGN_POST:
                 $block->setDamage(($meta+1<=15)?$meta+1:0);
@@ -52,15 +61,15 @@ class EventListener implements Listener
     //連打防止
     public function onReceive(DataPacketReceiveEvent $event)
     {
-        $player = $event->getPlayer();
-        if ($player->getInventory()->getItemInHand()->getNamedTag()->hasTag("debug")) {
-            $name = $player->getName();
-            $packet = $event->getPacket();
-            $time = ceil(microtime(true)*1000);
-            if ($packet instanceof InventoryTransactionPacket) {
+        $packet = $event->getPacket();
+        if ($packet instanceof InventoryTransactionPacket) {
+            $player = $event->getPlayer();
+            if ($player->getInventory()->getItemInHand()->getNamedTag()->hasTag("debug")) {
+                $name = $player->getName();
+                $time = ceil(microtime(true)*1000);
                 if (!isset($this->data[$name])) {
                     $this->data[$name] = $time;
-                } else if ($time - $this->data[$name] >= 500) {
+                } else if ($time - $this->data[$name] >= 300) {
                     $this->data[$name] = $time;
                 } else {
                     $event->setCancelled();
