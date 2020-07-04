@@ -22,14 +22,24 @@ class EventListener implements Listener
     }
 
     private function changeData(Player $player,Block $block) {
+        $meta = $block->getDamage();
         switch ($block->getId()) {
             case BlockIds::WOOD:
-                $meta = $block->getDamage();
                 $block->setDamage(($meta+4 <= 15)? $meta+4:abs(16-($meta+4)));
                 $player->sendActionBarMessage("向きを変更しました");
+                break;
+            case BlockIds::DISPENSER:
+            case BlockIds::FURNACE:
+            case BlockIds::BURNING_FURNACE:
+            case BlockIds::CHEST:
+            case BlockIds::ENDER_CHEST:
+            case BlockIds::WALL_SIGN:
+                $block->setDamage(($meta+1 <= 4)?$meta+1:0);
+                break;
+            case BlockIds::SIGN_POST:
+                $block->setDamage(($meta+1<=15)?$meta+1:0);
             /*default:
                 $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");*/
         }
     }
-
 }
