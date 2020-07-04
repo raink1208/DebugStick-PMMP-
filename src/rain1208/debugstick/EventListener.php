@@ -17,6 +17,8 @@ class EventListener implements Listener
 
     private $directions =
         [
+            "UP",
+            "DOWN",
             "NORTH",
             "SOUTH",
             "WEST",
@@ -37,9 +39,17 @@ class EventListener implements Listener
         $meta = $block->getDamage();
         switch ($block->getId()) {
             case BlockIds::WOOD:
+            case BlockIds::WOOD2:
                 $block->setDamage(($meta+4 <= 15)? $meta+4:abs(16-($meta+4)));
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
+            case BlockIds::WOODEN_STAIRS:
+
+            case BlockIds::SIGN_POST:
+                $block->setDamage(($meta+1<=15)?$meta+1:0);
+                $player->sendActionBarMessage("向きを変更しました");
+                break;
+
             case BlockIds::DISPENSER:
             case BlockIds::FURNACE:
             case BlockIds::BURNING_FURNACE:
@@ -48,11 +58,8 @@ class EventListener implements Listener
             case BlockIds::WALL_SIGN:
                 $block->setDamage(($meta+1 <= 5)? $meta+1:2);
                 $d = $block->getDamage();
-                $player->sendActionBarMessage("向きを".$this->directions[$d-2]."に変更しました");
+                $player->sendActionBarMessage("向きを".$this->directions[$d]."に変更しました");
                 break;
-            case BlockIds::SIGN_POST:
-                $block->setDamage(($meta+1<=15)?$meta+1:0);
-                $player->sendActionBarMessage("向きを変更しました");
             /*default:
                 $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");*/
         }

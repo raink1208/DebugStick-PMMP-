@@ -23,11 +23,11 @@ class Main extends PluginBase
     {
         if ($sender instanceof Player) {
             $item = Item::get(ItemIds::STICK);
-            $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(1),1));
-            $item->setCustomName("DebugStick");
             $nbt = new CompoundTag("",[]);
             $nbt->setString("debug","debug");
             $item->setNamedTag($nbt);
+            $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(1),1));
+            $item->setCustomName("DebugStick");
             $sender->getInventory()->addItem($item);
         }
         return true;
