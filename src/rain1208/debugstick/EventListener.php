@@ -25,7 +25,7 @@ class EventListener implements Listener
         switch ($block->getId()) {
             case BlockIds::WOOD:
                 $meta = $block->getDamage();
-                $block->setDamage(($meta+4 < 15)? $meta+4:abs(16-($meta+4)));
+                $block->setDamage(($meta+4 <= 15)? $meta+4:abs(16-($meta+4)));
                 $player->sendActionBarMessage("向きを変更しました");
             /*default:
                 $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");*/
