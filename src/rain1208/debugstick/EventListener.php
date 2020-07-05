@@ -15,23 +15,24 @@ class EventListener implements Listener
 {
     private $data;
 
-    private $TERRACOTTA =
-        BlockIds::PURPLE_GLAZED_TERRACOTTA ||
-        BlockIds::WHITE_GLAZED_TERRACOTTA ||
-        BlockIds::ORANGE_GLAZED_TERRACOTTA ||
-        BlockIds::MAGENTA_GLAZED_TERRACOTTA ||
-        BlockIds::LIGHT_BLUE_GLAZED_TERRACOTTA ||
-        BlockIds::YELLOW_GLAZED_TERRACOTTA ||
-        BlockIds::LIME_GLAZED_TERRACOTTA ||
-        BlockIds::PINK_GLAZED_TERRACOTTA ||
-        BlockIds::GRAY_GLAZED_TERRACOTTA ||
-        BlockIds::SILVER_GLAZED_TERRACOTTA ||
-        BlockIds::CYAN_GLAZED_TERRACOTTA ||
-        BlockIds::BLUE_GLAZED_TERRACOTTA ||
-        BlockIds::BROWN_GLAZED_TERRACOTTA ||
-        BlockIds::GREEN_GLAZED_TERRACOTTA ||
-        BlockIds::RED_GLAZED_TERRACOTTA ||
-        BlockIds::BLACK_GLAZED_TERRACOTTA;
+    private $TERRACOTTA = [
+        BlockIds::PURPLE_GLAZED_TERRACOTTA,
+        BlockIds::WHITE_GLAZED_TERRACOTTA,
+        BlockIds::ORANGE_GLAZED_TERRACOTTA,
+        BlockIds::MAGENTA_GLAZED_TERRACOTTA,
+        BlockIds::LIGHT_BLUE_GLAZED_TERRACOTTA,
+        BlockIds::YELLOW_GLAZED_TERRACOTTA,
+        BlockIds::LIME_GLAZED_TERRACOTTA,
+        BlockIds::PINK_GLAZED_TERRACOTTA,
+        BlockIds::GRAY_GLAZED_TERRACOTTA,
+        BlockIds::SILVER_GLAZED_TERRACOTTA,
+        BlockIds::CYAN_GLAZED_TERRACOTTA,
+        BlockIds::BLUE_GLAZED_TERRACOTTA,
+        BlockIds::BROWN_GLAZED_TERRACOTTA,
+        BlockIds::GREEN_GLAZED_TERRACOTTA,
+        BlockIds::RED_GLAZED_TERRACOTTA,
+        BlockIds::BLACK_GLAZED_TERRACOTTA
+    ];
 
     private $directions =
         [
@@ -113,13 +114,13 @@ class EventListener implements Listener
                 $player->sendActionBarMessage("向きを" . $this->directions[$d] . "に変更しました");
                 break;
 
-            case $this->TERRACOTTA:
-                $block->setDamage(($meta+1<=5)?$meta+1:1);
+            case in_array($block->getId(),$this->TERRACOTTA):
+                $block->setDamage(($meta + 1 <= 5) ? $meta + 1 : 1);
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
 
             default:
-                $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");
+                $player->sendActionBarMessage($block->getName() . "はプロパティを持っていません");
         }
     }
 
