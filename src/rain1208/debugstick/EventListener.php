@@ -94,9 +94,6 @@ class EventListener implements Listener
                 break;
 
             default:
-                //$block->setDamage(($meta+1<=15)?$meta+1:0);
-                //$player->sendMessage($block->getDamage()." : ".$block->getName());
-                //$player->sendActionBarMessage($block->getId()." : ".$block->getDamage());
                 $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");
         }
     }
