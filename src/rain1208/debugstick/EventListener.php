@@ -31,6 +31,7 @@ class EventListener implements Listener
         $hand = $event->getPlayer()->getInventory()->getItemInHand();
         if ($hand->getNamedTag()->hasTag("debug")) {
             $this->changeData($event->getPlayer(),$event->getBlock());
+            $event->setCancelled();
         }
     }
 
@@ -43,10 +44,33 @@ class EventListener implements Listener
                 $block->setDamage(($meta+4 <= 15)? $meta+4:abs(16-($meta+4)));
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
-            case BlockIds::WOODEN_STAIRS:
 
             case BlockIds::SIGN_POST:
                 $block->setDamage(($meta+1<=15)?$meta+1:0);
+                $player->sendActionBarMessage("向きを変更しました");
+                break;
+
+            case BlockIds::JACK_O_LANTERN:
+                $block->setDamage(($meta+1 <= 4)? $meta+1:1);
+                $player->sendActionBarMessage("向きを変更しました");
+                break;
+
+            case BlockIds::OAK_STAIRS:
+            case BlockIds::STONE_STAIRS:
+            case BlockIds::COBBLESTONE_STAIRS:
+            case BlockIds::BRICK_STAIRS:
+            case BlockIds::STONE_BRICK_STAIRS:
+            case BlockIds::NETHER_BRICK_STAIRS:
+            case BlockIds::SANDSTONE_STAIRS:
+            case BlockIds::SPRUCE_STAIRS:
+            case BlockIds::BIRCH_STAIRS:
+            case BlockIds::JUNGLE_STAIRS:
+            case BlockIds::QUARTZ_STAIRS:
+            case BlockIds::ACACIA_STAIRS:
+            case BlockIds::DARK_OAK_STAIRS:
+            case BlockIds::RED_SANDSTONE_STAIRS:
+            case BlockIds::PURPUR_STAIRS:
+                $block->setDamage(($meta+1<=7)?$meta+1:0);
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
 
@@ -60,8 +84,12 @@ class EventListener implements Listener
                 $d = $block->getDamage();
                 $player->sendActionBarMessage("向きを".$this->directions[$d]."に変更しました");
                 break;
-            /*default:
-                $player->sendActionBarMessage($block->getName()."はプロパティを持っていません");*/
+
+            default:
+                $block->setDamage(($meta+1<=15)?$meta+1:0);
+                $player->sendMessage($block->getDamage()." : ".$block->getName());
+                $player->sendActionBarMessage($block->getId()." : ".$block->getDamage());
+                //$player->sendActionBarMessage($block->getName()."はプロパティを持っていません");
         }
     }
 
