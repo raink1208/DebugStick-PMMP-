@@ -64,6 +64,7 @@ class EventListener implements Listener
                 break;
 
             case BlockIds::SIGN_POST:
+            case BlockIds::STANDING_BANNER:
                 $block->setDamage(($meta + 1 <= 15) ? $meta + 1 : 0);
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
@@ -106,19 +107,22 @@ class EventListener implements Listener
             case BlockIds::CHEST:
             case BlockIds::ENDER_CHEST:
             case BlockIds::WALL_SIGN:
+            case BlockIds::WALL_BANNER:
                 $block->setDamage(($meta + 1 <= 5) ? $meta + 1 : 2);
                 $d = $block->getDamage();
                 $player->sendActionBarMessage("向きを" . $this->directions[$d] . "に変更しました");
                 break;
+
             case $this->TERRACOTTA:
                 $block->setDamage(($meta+1<=5)?$meta+1:1);
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
+
             default:
                 $block->setDamage(($meta + 1 <= 15) ? $meta + 1 : 0);
                 $player->sendMessage($block->getDamage() . " : " . $block->getName());
                 $player->sendActionBarMessage($block->getId() . " : " . $block->getDamage());
-            //$player->sendActionBarMessage($block->getName()."はプロパティを持っていません");
+                //$player->sendActionBarMessage($block->getName()."はプロパティを持っていません");
         }
     }
 
