@@ -55,6 +55,14 @@ class EventListener implements Listener
                 $player->sendActionBarMessage("向きを変更しました");
                 break;
 
+            case BlockIds::RAIL:
+            case BlockIds::POWERED_RAIL:
+            case BlockIds::DETECTOR_RAIL:
+            case BlockIds::ACTIVATOR_RAIL:
+                $block->setDamage(($meta+1<=9)?$meta+1:0);
+                $player->sendActionBarMessage("向きを変更しました");
+                break;
+
             case BlockIds::OAK_STAIRS:
             case BlockIds::STONE_STAIRS:
             case BlockIds::COBBLESTONE_STAIRS:
